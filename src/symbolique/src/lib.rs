@@ -5,10 +5,13 @@ pub mod macro_internals {
         std::{
             clone::Clone,
             cmp::{Eq, Ord, PartialEq, PartialOrd},
-            concat, fmt,
+            concat,
+            convert::AsRef,
+            fmt,
             hash::Hash,
             marker::Copy,
             mem::transmute,
+            primitive::str,
             sync::OnceLock,
         },
         symbolique_proc::__handle_magic,
@@ -61,7 +64,7 @@ macro_rules! define_table {
 						};
 					)*
 
-					pub fn new(str: &str) -> Self {
+					pub fn new(str: impl $crate::macro_internals::AsRef<$crate::macro_internals::str>) -> Self {
 						Self(Self::rodeo().get_or_intern(str))
 					}
 
